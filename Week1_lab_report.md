@@ -18,4 +18,4 @@
 ## Step 3: Try running some commands
 * I tried running pwd, ls, ls - lat, cd ~, and some basic commands shown below
 
-![Image](C://Users/tanvijain/Desktop/step3_screenshot.png)
+![Image](https://github.com/baguetteandbuns/cse15l-lab-reports/blob/main/step3_screenshot.png)
