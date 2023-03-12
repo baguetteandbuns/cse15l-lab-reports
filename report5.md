@@ -1,8 +1,41 @@
 # Week 9 Lab Report 5
 This lab report goes into more depth about Lab Report 3. I explored the `grep` command in that report, and I will be delving into the `find` command for this week's report.
-## Option 1: `-i` command-line option: `--ignore-case`
+## Option 1: `-iname` command-line option
 ### Example 1 on Directory
+```
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:332$ find ./written_2/ -iname '*GUIDES'
+./written_2/travel_guides
+```
 ### Example 2 on File
+```
+cs15lwi23apw@ieng6-203]:skill-demo1-data:330$ find ./written_2/ -iname '*whattodo.txt'
+./written_2/travel_guides/berlitz2/Algarve-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Amsterdam-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Athens-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Bahamas-WhatToDo.txt                                       
+./written_2/travel_guides/berlitz2/Bali-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Barcelona-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Beijing-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Berlin-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Bermuda-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Budapest-WhatToDo.txt
+./written_2/travel_guides/berlitz2/California-WhatToDo.txt
+./written_2/travel_guides/berlitz2/CanaryIslands-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Cancun-WhatToDo.txt
+./written_2/travel_guides/berlitz2/China-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Costa-WhatToDo.txt
+./written_2/travel_guides/berlitz2/CostaBlanca-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Crete-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Cuba-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Nepal-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Paris-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Poland-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Portugal-WhatToDo.txt
+./written_2/travel_guides/berlitz2/PuertoRico-WhatToDo.txt
+./written_2/travel_guides/berlitz2/Vallarta-WhatToDo.txt
+```
+* Explanation: find file names with the specified pattern but it isn't case sensitive. For instance, when I capitalise "GUIDES" for finding the 'travel_guides' directory wouldn't show up normally. However, since I used `-iname` it does show up. Similarly, for the second example, '-WhatToDo' wouldn't show up using all lowercase letters, but it does due to its case insensitivity.
+* Citation: used `man find` on terminal
 
 ## Option 2: `-type` command-line option
 ### Example 1 on Directory
@@ -250,5 +283,65 @@ written_2/travel_guides/berlitz2/Vallarta-History.txt
 written_2/travel_guides/berlitz2/Vallarta-WhatToDo.txt
 written_2/travel_guides/berlitz2/Vallarta-WhereToGo.txt
 ```
-* Explanation: allows to specify the type of file or directory to search for. 
+* Explanation: allows to specify the type of file or directory to search for. If you specify `-type f` it only shows file paths. However, `-type d` only shows directory paths. 
+* Citation: used command `man find` on terminal
+
+## Option 3: `-size` command-line option
+### Example 1 on Directory
+```
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:361$ find ./written_2 -type d -size -1000M
+./written_2
+./written_2/non-fiction
+./written_2/non-fiction/OUP
+./written_2/non-fiction/OUP/Abernathy
+./written_2/non-fiction/OUP/Berk
+./written_2/non-fiction/OUP/Castro
+./written_2/non-fiction/OUP/Fletcher
+./written_2/non-fiction/OUP/Kauffman
+./written_2/non-fiction/OUP/Rybczynski
+./written_2/travel_guides
+./written_2/travel_guides/berlitz1
+./written_2/travel_guides/berlitz2
+```
+### Example 2 on File
+```
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:358$ find ./written_2 -type f -size -1M
+```
+
+* Explanation: this command finds all files in the current directory and its subdirectories that are lesser than 1000 megabytes, and the same thing for files. Since no files are smaller than 1 megabyte, nothing shows up.
+* Citation: used command `man find` on terminal
+
+## Option 4: `-delete` command-line option
+### Example 1 on Directory
+```
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:372$ find ./written_2 -name 'OUP' -delete
+find: cannot delete './written_2/non-fiction/OUP': Directory not empty
+```
+### Example 2 on File
+```
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:362$ find ./written_2 -name '*Cuba*' -delete
+[cs15lwi23apw@ieng6-203]:skill-demo1-data:363$ cd ./written_2/travel_guides/berlitz2/
+[cs15lwi23apw@ieng6-203]:berlitz2:364$ ls
+Algarve-History.txt      Barcelona-History.txt     Canada-History.txt           CstaBlanca-WhereToGo.txt
+Algarve-Intro.txt        Barcelona-WhatToDo.txt    Canada-WhereToGo.txt         Nepal-History.txt
+Algarve-WhatToDo.txt     Barcelona-WhereToGo.txt   CanaryIslands-History.txt    Nepal-WhatToDo.txt
+Algarve-WhereToGo.txt    Beijing-History.txt       CanaryIslands-WhatToDo.txt   Nepal-WhereToGo.txt
+Amsterdam-History.txt    Beijing-WhatToDo.txt      CanaryIslands-WhereToGo.txt  NewOrleans-History.txt
+Amsterdam-Intro.txt      Beijing-WhereToGo.txt     Cancun-History.txt           Paris-WhatToDo.txt
+Amsterdam-WhatToDo.txt   Berlin-History.txt        Cancun-WhatToDo.txt          Paris-WhereToGo.txt
+Amsterdam-WhereToGo.txt  Berlin-WhatToDo.txt       Cancun-WhereToGo.txt         Poland-History.txt
+Athens-History.txt       Berlin-WhereToGo.txt      China-History.txt            Poland-WhatToDo.txt
+Athens-Intro.txt         Bermuda-WhatToDo.txt      China-WhatToDo.txt           Portugal-History.txt
+Athens-WhatToDo.txt      Bermuda-WhereToGo.txt     China-WhereToGo.txt          Portugal-WhatToDo.txt
+Athens-WhereToGo.txt     Bermuda-history.txt       Costa-History.txt            Portugal-WhereToGo.txt
+Bahamas-History.txt      Boston-WhereToGo.txt      Costa-WhatToDo.txt           PuertoRico-History.txt
+Bahamas-Intro.txt        Budapest-History.txt      Costa-WhereToGo.txt          PuertoRico-WhatToDo.txt
+Bahamas-WhatToDo.txt     Budapest-WhatToDo.txt     CostaBlanca-History.txt      PuertoRico-WhereToGo.txt
+Bahamas-WhereToGo.txt    Budapest-WhereoGo.txt     CostaBlanca-WhatToDo.txt     Vallarta-History.txt
+Bali-History.txt         California-History.txt    Crete-History.txt            Vallarta-WhatToDo.txt
+Bali-WhatToDo.txt        California-WhatToDo.txt   Crete-WhatToDo.txt           Vallarta-WhereToGo.txt
+Bali-WhereToGo.txt       California-WhereToGo.txt  Crete-WhereToGo.txt
+```
+
+* Explanation: Deletes the files/directories found. However, directories are only deleted if they are empty. For instance, example 1 command tries to find the directory called 'OUP' and delete it. However, since it wasn't empty, it didn't get deleted. On the other hand, I deleted file names with "Cuba" in them, and as you can see no files with "Cuba" in them are there. 
 * Citation: used command `man find` on terminal
